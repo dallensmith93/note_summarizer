@@ -11,6 +11,7 @@
     "moduleResolution": "Bundler",
     "isolatedModules": true,
     "noEmit": true,
+    "types": ["node"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
