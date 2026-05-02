@@ -1,0 +1,138 @@
+.print-page-shell {
+  min-height: 100vh;
+  background: #eeeeee;
+  color: #171717;
+  padding: 24px;
+}
+
+.print-toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.print-document {
+  width: min(920px, 100%);
+  margin: 0 auto;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #171717;
+  padding: 44px;
+  box-shadow: 0 20px 80px rgb(0 0 0 / 0.22);
+}
+
+.print-header {
+  border-bottom: 2px solid #171717;
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+}
+
+.print-header p,
+.print-header span {
+  margin: 0;
+  color: #555555;
+  font-size: 0.9rem;
+}
+
+.print-header h1 {
+  margin: 8px 0;
+  font-size: 2.1rem;
+  line-height: 1.12;
+  color: #111111;
+}
+
+.print-metadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.print-metadata div {
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.print-metadata strong,
+.print-metadata span {
+  display: block;
+}
+
+.print-metadata strong {
+  color: #444444;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.print-metadata span {
+  margin-top: 4px;
+}
+
+.print-section {
+  margin: 22px 0;
+  break-inside: avoid;
+}
+
+.print-section h2 {
+  margin: 0 0 8px;
+  color: #111111;
+  font-size: 1.15rem;
+}
+
+.print-section p,
+.print-section li {
+  color: #242424;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.print-section ul {
+  margin: 8px 0 0;
+  padding-left: 22px;
+}
+
+.print-footer {
+  margin-top: 36px;
+  border-top: 1px solid #dddddd;
+  padding-top: 12px;
+  color: #555555;
+  font-size: 0.86rem;
+  text-align: center;
+}
+
+@media print {
+  @page {
+    margin: 0.6in;
+  }
+
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .print-page-shell {
+    min-height: auto;
+    background: #ffffff;
+    padding: 0;
+  }
+
+  .print-toolbar,
+  .sidebar,
+  .nav-list,
+  .brand {
+    display: none !important;
+  }
+
+  .print-document {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}

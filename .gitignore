@@ -1,0 +1,38 @@
+node_modules/
+dist/
+
+# Local agent system / private workflow prompts
+.ai/
+AGENTS.md
+rules/
+.cursor/rules/
+
+# Environment and secret material
+.env
+.env.*
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cert
+secrets/
+secrets.*
+
+# Local build/deploy/runtime artifacts
+.netlify/
+.dev-server*.log
+
+# Local SQLite data and exports
+*.db
+*.sqlite
+*.sqlite3
+note-summeraizer-export-*.bin
+note-summeraizer-export-*.sqlite
+
+# Package manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
