@@ -7,8 +7,12 @@ import { TicketForm } from "./pages/TicketForm";
 import { Accounts } from "./pages/Accounts";
 import { Knowledge } from "./pages/Knowledge";
 import { Settings } from "./pages/Settings";
+import { EmailInbox } from "./pages/EmailInbox";
+import { runAutonomousEmailCycle } from "./data/emailRepository";
 
-type RouteName = "dashboard" | "tickets" | "ticketDetail" | "newTicket" | "editTicket" | "accounts" | "knowledge" | "settings";
+type RouteName = "dashboard" | "tickets" | "ticketDetail" | "newTicket" | "editTicket" | "accounts" | "knowledge" | "email" | "settings";
+
+const EMAIL_CYCLE_INTERVAL_MS = 15 * 60 * 1000;
 
 interface Route {
   name: RouteName;
@@ -41,6 +45,9 @@ function parseRoute(hash: string): Route {
   if (parts[0] === "knowledge") {
     return { name: "knowledge" };
   }
+  if (parts[0] === "email") {
+    return { name: "email" };
+  }
   if (parts[0] === "settings") {
     return { name: "settings" };
   }
@@ -64,8 +71,36 @@ export function navigate(path: string): void {
   window.location.hash = path;
 }
 
+function useAutonomousEmailLoop(): void {
+  useEffect(() => {
+    let cycleRunning = false;
+
+    async function runCycle() {
+      if (cycleRunning || document.visibilityState !== "visible") {
+        return;
+      }
+
+      cycleRunning = true;
+      try {
+        const result = await runAutonomousEmailCycle();
+        if (result.generated) {
+          window.dispatchEvent(new Event("email:updated"));
+        }
+      } catch (err) {
+        console.error("Autonomous email cycle failed", err);
+      } finally {
+        cycleRunning = false;
+      }
+    }
+
+    const intervalId = window.setInterval(runCycle, EMAIL_CYCLE_INTERVAL_MS);
+    return () => window.clearInterval(intervalId);
+  }, []);
+}
+
 export default function App() {
   const route = useHashRoute();
+  useAutonomousEmailLoop();
 
   const page = useMemo(() => {
     switch (route.name) {
@@ -81,6 +116,8 @@ export default function App() {
         return <Accounts />;
       case "knowledge":
         return <Knowledge />;
+      case "email":
+        return <EmailInbox />;
       case "settings":
         return <Settings />;
       case "dashboard":

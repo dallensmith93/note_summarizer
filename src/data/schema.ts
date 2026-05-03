@@ -82,4 +82,44 @@ CREATE INDEX IF NOT EXISTS idx_tickets_queue ON tickets(queue);
 CREATE INDEX IF NOT EXISTS idx_tickets_owner ON tickets(owner);
 CREATE INDEX IF NOT EXISTS idx_tickets_account_name ON tickets(account_name);
 CREATE INDEX IF NOT EXISTS idx_ticket_comments_ticket_id ON ticket_comments(ticket_id);
+
+CREATE TABLE IF NOT EXISTS email_threads (
+  id TEXT PRIMARY KEY,
+  contact_key TEXT NOT NULL,
+  contact_name TEXT NOT NULL,
+  contact_email TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  status TEXT NOT NULL,
+  last_message_at TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS email_messages (
+  id TEXT PRIMARY KEY,
+  thread_id TEXT NOT NULL,
+  direction TEXT NOT NULL,
+  author_name TEXT NOT NULL,
+  author_email TEXT NOT NULL,
+  recipient_name TEXT NOT NULL,
+  recipient_email TEXT NOT NULL,
+  body TEXT NOT NULL,
+  is_read INTEGER NOT NULL,
+  created_at TEXT NOT NULL,
+  FOREIGN KEY (thread_id) REFERENCES email_threads(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS email_response_queue (
+  id TEXT PRIMARY KEY,
+  thread_id TEXT NOT NULL,
+  contact_key TEXT NOT NULL,
+  user_reply TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  FOREIGN KEY (thread_id) REFERENCES email_threads(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_email_threads_last_message_at ON email_threads(last_message_at);
+CREATE INDEX IF NOT EXISTS idx_email_messages_thread_id ON email_messages(thread_id);
+CREATE INDEX IF NOT EXISTS idx_email_messages_is_read ON email_messages(is_read);
+CREATE INDEX IF NOT EXISTS idx_email_response_queue_created_at ON email_response_queue(created_at);
 `;

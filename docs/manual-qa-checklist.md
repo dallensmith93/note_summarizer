@@ -26,6 +26,16 @@ This workflow has been replaced by **Ticket Queue**.
 - Open **Accounts**.
 - Confirm account cards show active cases, latest update, and related cases.
 
+## Mock Email
+
+- Open **Email Inbox**.
+- Confirm Jane Doe, Jack Doe, and Tier 1 Support email threads load from local SQLite.
+- Send a reply on one thread.
+- Confirm the thread changes to Waiting on customer or Waiting on sender.
+- Use **Run Cycle Now**.
+- Confirm Jane, Jack, or Tier 1 Support sends a follow-up that references the reply.
+- Refresh the app and confirm email threads persist.
+
 ## Knowledge
 
 - Open **Knowledge**.

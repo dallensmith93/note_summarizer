@@ -1,4 +1,5 @@
 import initSqlJs, { type Database } from "sql.js";
+import sqlWasmUrl from "sql.js/dist/sql-wasm.wasm?url";
 import { SCHEMA_SQL } from "./schema";
 
 const IDB_NAME = "note-summeraizer-sqlite";
@@ -77,7 +78,7 @@ export async function getDatabase(): Promise<Database> {
   if (!databasePromise) {
     databasePromise = (async () => {
       const SQL = await initSqlJs({
-        locateFile: (file) => `/${file}`
+        locateFile: () => sqlWasmUrl
       });
       const existingBytes = await readDatabaseBytes();
       const db = existingBytes ? new SQL.Database(existingBytes) : new SQL.Database();

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Bell, BookOpen, Building2, FilePlus2, Gauge, Inbox, Search, Settings, ShieldCheck } from "lucide-react";
+import { Bell, BookOpen, Building2, FilePlus2, Gauge, Inbox, Mail, Search, Settings, ShieldCheck } from "lucide-react";
 
 const navItems = [
   { href: "#/", label: "Service Console", route: "dashboard", icon: Gauge },
@@ -7,6 +7,7 @@ const navItems = [
   { href: "#/new-ticket", label: "New Ticket", route: "newTicket", icon: FilePlus2 },
   { href: "#/accounts", label: "Accounts", route: "accounts", icon: Building2 },
   { href: "#/knowledge", label: "Knowledge", route: "knowledge", icon: BookOpen },
+  { href: "#/email", label: "Email Inbox", route: "email", icon: Mail },
   { href: "#/settings", label: "Settings", route: "settings", icon: Settings }
 ];
 
